@@ -48,14 +48,15 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         try
         {
-        	Connection con=DBUtil.getConnection();
-        	Statement stmt=con.createStatement();
-			String sql="select * from demodatabase.demotable where uid="+ID+" and pwd="+PW;
-			ResultSet rs=stmt.executeQuery(sql);
-		    while(rs.next())
-		    {
-		    	type=true;
-		    }
+//        	Connection con=DBUtil.getConnection();
+//        	Statement stmt=con.createStatement();
+//			String sql="select * from demodatabase.demotable where uid="+ID+" and pwd="+PW;
+//			ResultSet rs=stmt.executeQuery(sql);
+//		    while(rs.next())
+//		    {
+//		    	type=true;
+//		    }
+        	type=true;
         }
         catch(Exception ex)
         {
@@ -63,7 +64,7 @@ public class Login extends HttpServlet {
         }
         finally
         {
-        	DBUtil.Close();
+//        	DBUtil.Close();
         	out.print(type);
         	out.flush();
         	out.close();

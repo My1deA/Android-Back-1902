@@ -52,18 +52,19 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password").trim();
 		String uri = "jdbc:mysql://localhost/MakeFriend";
 		try {
-			con = DriverManager.getConnection(uri,"root","201513010223");
-			String condition = "select * from member where logname = '"+logname+"' and password = '"+password+"'";
-			sql = con.prepareStatement(condition);
-			ResultSet rSet = sql.executeQuery(condition);
-			if(rSet.next()) {
-				out.println("login successfully!");
-			}
-			else {
-				out.println("can not login!");
-			}
-			con.close();		
-		} catch (SQLException e) {
+//			con = DriverManager.getConnection(uri,"root","201513010223");
+//			String condition = "select * from member where logname = '"+logname+"' and password = '"+password+"'";
+//			sql = con.prepareStatement(condition);
+//			ResultSet rSet = sql.executeQuery(condition);
+//			if(rSet.next()) {
+//				out.println("login successfully!");
+//			}
+//			else {
+//				out.println("can not login!");
+//			}
+//			con.close();	
+			out.println("login successfully!");
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
