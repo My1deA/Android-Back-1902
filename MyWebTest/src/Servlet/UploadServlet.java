@@ -92,7 +92,8 @@ public class UploadServlet extends HttpServlet {
     				BufferedInputStream in = new BufferedInputStream(item.getInputStream());
     				
     				
-    				String path=req.getSession().getServletContext().getRealPath("/"+username+"/");
+//    				String path=req.getSession().getServletContext().getRealPath("/")+"/"+username+"/";
+    				String path="F://Picture//Upload"+"//"+username+"//";
     				path+=filename;
     				File file=new File(path);
     				File fileParent=file.getParentFile();
