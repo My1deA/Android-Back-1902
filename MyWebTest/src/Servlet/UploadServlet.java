@@ -18,14 +18,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
  
 @WebServlet("/uploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+    private static Map<String,String> map=new HashMap<String,String>();
+    private String username;
+    private String password;
+	
     public UploadServlet() {
         super();
     }
@@ -35,7 +42,7 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	// TODO Auto-generated method stub
     	System.out.println("require .getContenType"+req.getContentType());
-    	resp.setContentType("text/html");
+    	resp.setContentType("text/html,charset=utf-8");
     	Writer o=resp.getWriter();
     	
     	if(ServletFileUpload.isMultipartContent(req)){
@@ -62,21 +69,39 @@ public class UploadServlet extends HttpServlet {
     			FileItem item=(FileItem) iter.next();
     			if(item.isFormField()) {
     				System.out.println("表单");
+    				//item.getFieldName() 获得Map的键  item.getString()获得Map值
     				System.out.println("FileName:"+item.getFieldName());
     				System.out.println(new String(item.getString("utf-8")));
+    				
+    				if(item.getFieldName().equalsIgnoreCase("password")) {
+    					password=new String(item.getString("utf-8"));
+    				}
+    				if(item.getFieldName().equalsIgnoreCase("username")) {
+    					username=new String(item.getString("utf-8"));
+    				}
+    				
+    				
     			}else if (!item.isFormField()){
+    				//item.getName(); 获得文件名
     				System.out.println("源文件:"+item.getName());
+    	
     				String filename=item.getName();
     				if(filename.indexOf("\\")>=0) {
     					filename=item.getName().substring(item.getName().lastIndexOf("\\"));
     				}
     				BufferedInputStream in = new BufferedInputStream(item.getInputStream());
     				
-//    				String path="F:/Picture/"+filename;
-    				 String path=req.getSession().getServletContext().getRealPath("/upload");
-    				path+=filename;
     				
-    				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(new File(path)));
+    				String path=req.getSession().getServletContext().getRealPath("/"+username+"/");
+    				path+=filename;
+    				File file=new File(path);
+    				File fileParent=file.getParentFile();
+    				//判断是否存在
+    				if(!fileParent.exists()) {
+    					fileParent.mkdirs();
+    				}
+    				
+    				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(file));
     				
     				Streams.copy(in, out, true);
                     o.write("文件上传成功");
@@ -94,10 +119,18 @@ public class UploadServlet extends HttpServlet {
     	// TODO Auto-generated method stub
     	this.doPost(req, resp);
     }
-
-
+    
+   
 }
 
+//Map map = new HashMap(); 
+//Iterator entries = map.entrySet().iterator(); 
+//while (entries.hasNext()) { 
+//  Map.Entry entry = (Map.Entry) entries.next(); 
+//  Integer key = (Integer)entry.getKey(); 
+//  Integer value = (Integer)entry.getValue(); 
+//  System.out.println("Key = " + key + ", Value = " + value); 
+//}
 
 //protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //    DiskFileItemFactory factory=new DiskFileItemFactory();

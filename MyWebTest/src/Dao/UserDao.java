@@ -55,8 +55,6 @@ public class UserDao {
 		}
 	}
 	
-	
-	
 	public static boolean  query(UserItem user) {
 	
 		boolean flag=false;
