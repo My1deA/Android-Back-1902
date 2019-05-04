@@ -8,7 +8,15 @@ public class UploadItem {
 	private String type;
 	private String text;
 	
-	
+	public UploadItem()
+	{
+		this.uid = null;
+		this.url = null;
+		this.time = null;
+		this.loaction =null;
+		this.type = null;
+		this.text=null;
+	}
 	
 	public UploadItem(String uid, String text, String location, String time, String type,String url) {
 		super();

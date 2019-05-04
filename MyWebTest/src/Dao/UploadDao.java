@@ -25,14 +25,14 @@ public class UploadDao {
 	public static boolean insert(UploadItem item) {
 		try {
 			connection=JDBCUtil.getConnection();
-			String sql="insert into uploadinfo(uid,text,location,time,type,url) values(?,?,?,?,?,?)";
+			String sql="insert into uploadinfo(uid,time,url,text,location,type) values(?,?,?,?,?,?)";
 			statement=connection.prepareStatement(sql);
 			statement.setString(1, item.getUid());
-			statement.setString(2, item.getText());
-			statement.setString(3, item.getLoaction());
-			statement.setString(4, item.getTime());
-			statement.setString(5,item.getType());
-			statement.setString(6, item.getUrl());
+			statement.setString(2, item.getTime());
+			statement.setString(3, item.getUrl());
+			statement.setString(4, item.getText());
+			statement.setString(5,item.getLoaction());
+			statement.setString(6, item.getType());
 			
 			statement.executeUpdate();
 			System.out.println("文件 上传成功");

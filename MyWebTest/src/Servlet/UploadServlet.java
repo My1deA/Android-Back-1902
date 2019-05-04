@@ -5,6 +5,9 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
+import Dao.UploadDao;
+import Model.UploadItem;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,9 +33,8 @@ import java.util.UUID;
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static Map<String,String> map=new HashMap<String,String>();
-    private String username;
-    private String password;
-	
+    private UploadItem Uitem=null;
+    
     public UploadServlet() {
         super();
     }
@@ -42,8 +44,13 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	// TODO Auto-generated method stub
     	System.out.println("require .getContenType"+req.getContentType());
-    	resp.setContentType("text/html,charset=utf-8");
+    	resp.setContentType("text/html;charset=utf-8");
+    	//译码字符
+    	resp.setCharacterEncoding("UTF-8");
     	Writer o=resp.getWriter();
+    	
+    	Uitem=new UploadItem();
+    	
     	
     	if(ServletFileUpload.isMultipartContent(req)){
     		req.setCharacterEncoding("utf-8");
@@ -68,16 +75,44 @@ public class UploadServlet extends HttpServlet {
     		while(iter!=null&&iter.hasNext()) {
     			FileItem item=(FileItem) iter.next();
     			if(item.isFormField()) {
-    				System.out.println("表单");
+//    				System.out.println("表单");
     				//item.getFieldName() 获得Map的键  item.getString()获得Map值
-    				System.out.println("FileName:"+item.getFieldName());
-    				System.out.println(new String(item.getString("utf-8")));
+//    				System.out.println("FileName:"+item.getFieldName());
+//    				System.out.println(new String(item.getString("utf-8")));
     				
-    				if(item.getFieldName().equalsIgnoreCase("password")) {
-    					password=new String(item.getString("utf-8"));
+//    				if(item.getFieldName().equalsIgnoreCase("password")) {
+//    					password=new String(item.getString("utf-8"));
+//    					System.out.println(new String(item.getString("utf-8")));
+//    				}
+//    				if(item.getFieldName().equalsIgnoreCase("username")) {
+//    					username=new String(item.getString("utf-8"));
+//    					System.out.println(new String(item.getString("utf-8")));
+//    				}
+//    				if(item.getFieldName().equalsIgnoreCase("time")) {
+//    					System.out.println(new String(item.getString("utf-8")));
+//    				}
+//    				if(item.getFieldName().equalsIgnoreCase("type")) {
+//    					System.out.println(new String(item.getString("utf-8")));
+//    				}
+    				
+    				
+    				if(item.getFieldName().equalsIgnoreCase("uid")) {
+    					Uitem.setUid(new String(item.getString("utf-8")));
     				}
-    				if(item.getFieldName().equalsIgnoreCase("username")) {
-    					username=new String(item.getString("utf-8"));
+    				if(item.getFieldName().equalsIgnoreCase("time")) {
+    					Uitem.setTime(new String(item.getString("utf-8")));
+    				}
+    				if(item.getFieldName().equalsIgnoreCase("text")) {
+    					Uitem.setText(new String(item.getString("utf-8")));
+    					System.out.println(Uitem.getText());
+    				}
+    				if(item.getFieldName().equalsIgnoreCase("location")) {
+    					Uitem.setLoaction(new String(item.getString("utf-8")));
+    					System.out.println(Uitem.getLoaction());
+    				}
+    				if(item.getFieldName().equalsIgnoreCase("type")) {
+    					Uitem.setType(new String(item.getString("utf-8")));
+    					System.out.println(Uitem.getType());
     				}
     				
     				
@@ -93,7 +128,7 @@ public class UploadServlet extends HttpServlet {
     				
     				
 //    				String path=req.getSession().getServletContext().getRealPath("/")+"/"+username+"/";
-    				String path="F://Picture//Upload"+"//"+username+"//";
+    				String path="F://Picture//Upload"+"//"+Uitem.getUid()+"//";
     				path+=filename;
     				File file=new File(path);
     				File fileParent=file.getParentFile();
@@ -102,11 +137,21 @@ public class UploadServlet extends HttpServlet {
     					fileParent.mkdirs();
     				}
     				
+    				//url
+    				Uitem.setUrl("/"+Uitem.getUid()+"/"+filename);
+    				
     				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(file));
     				
     				Streams.copy(in, out, true);
-                    o.write("文件上传成功");
-            		System.out.println("目标文件:" + path);
+//                    o.write("文件上传成功");
+            		System.out.println("目标文件位置:" + path);
+            		System.out.println("目标文件存入硬盘成功");
+            		
+            		if(UploadDao.insert(Uitem)) {
+                      o.write("文件上传成功");
+            		}else {
+            			o.write("文件上传失败");
+            		}
     			}
     		}
     	}else {
