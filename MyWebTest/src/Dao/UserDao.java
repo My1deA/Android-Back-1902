@@ -116,11 +116,11 @@ public class UserDao {
 	}
 	
 
-//	public static void main(String[] args) {
-//		UserItem item=new UserItem("1","12");
-//		if(UserDao.login(item)) {
-//			System.out.println("登录成功");
-//		}
-//	}
+	public static void main(String[] args) {
+		UserItem item=new UserItem("1","12");
+		if(UserDao.login(item)) {
+			System.out.println("登录成功");
+		}
+	}
 	
 }

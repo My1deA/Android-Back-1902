@@ -12,7 +12,7 @@ import javax.swing.JButton;
 
 public class JDBCUtil {
 	
-	private static String url="jdbc:mysql://localhost:3306/demodatabase?serverTimezone=UTC";
+	private static String url="jdbc:mysql://localhost:3306/demodatabase?serverTimezone=UTC&&characterEncoding=utf-8";
 //	private static String url="jdbc:mysql://172.16.86.194:3306/demodatabase?serverTimezone=UTC";
 	private static String driverClass="com.mysql.cj.jdbc.Driver";
 	private static String username="root";

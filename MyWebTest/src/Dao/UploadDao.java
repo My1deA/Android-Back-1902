@@ -1,5 +1,6 @@
 package Dao;
 
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,9 +31,16 @@ public class UploadDao {
 			statement.setString(1, item.getUid());
 			statement.setString(2, item.getTime());
 			statement.setString(3, item.getUrl());
-			statement.setString(4, item.getText());
+	
+			
+			statement.setString(4,item.getText());
 			statement.setString(5,item.getLoaction());
 			statement.setString(6, item.getType());
+			
+//			System.out.println(item.getUid());
+//			System.out.println(item.getText());
+//			System.out.println(item.getLoaction());
+//			System.out.println(item.getType());
 			
 			statement.executeUpdate();
 			System.out.println("文件 上传成功");
@@ -83,13 +91,13 @@ public class UploadDao {
 			set=statement.executeQuery(sql);
 			while(set.next()) {
 				String t_uid=set.getString(1);
-				String t_text=set.getString(2);
-				String t_location=set.getString(3);
-				String t_time=set.getString(4);
-				String t_type=set.getString(5);
-				String t_url=set.getString(6);
+				String t_time=set.getString(2);
+				String t_url=set.getString(3);
+				String t_text=set.getString(4);
+				String t_location=set.getString(5);
+				String t_type=set.getString(6);
 				
-				UploadItem item=new UploadItem(t_uid, t_text, t_location, t_time, t_type, t_url);
+				UploadItem item=new UploadItem(t_uid, t_time, t_url, t_text, t_location, t_type);
 				list.add(item);
 			}
 			System.out.println("Size: " +list.size());
