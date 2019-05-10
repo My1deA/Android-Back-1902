@@ -8,42 +8,56 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
 
-import org.json.JSONArray;
+
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import Model.UploadItem;
 import Util.JDBCUtil;
 
 public class DownloadDao {
-	private static ArrayList<UploadItem> array=new ArrayList<UploadItem>();
+//	private static ArrayList<UploadItem> arraylist=new ArrayList<UploadItem>();
 	private static Connection connection=null;
 	private static PreparedStatement statement=null;
 	private static ResultSet set=null;
 	//ali
-	private static JSONObject jsonObject=new JSONObject();
-	private static JSONArray jsonArray=new JSONArray();
+//	private static JSONObject jsonObject=new JSONObject();
+	private static JSONArray jsonArray=null;
 	private static int count=0;
 	private static String jsonStr;
 	
-	public static ArrayList<UploadItem> query(){
+	public static String query(){
 		
 		try {
 			connection=JDBCUtil.getConnection();
-			String sql="select * from uploadinfo order by ids desc limit 3";
+			String sql="select * from uploadinfo order by time desc limit 3";
 			statement=connection.prepareStatement(sql);
 			set=statement.executeQuery(sql);
+			jsonArray=new JSONArray();
 			while(set.next()) {
-				UploadItem item=new UploadItem();
+				JSONObject jsonObject=new JSONObject();
+	
 				int ids=set.getInt(1);
-				item.setUid(set.getString(2));
-				item.setTime(set.getString(3));
-				item.setUrl(set.getString(4));
-				item.setText(set.getString(5));
-				item.setLoaction(set.getString(6));
-				item.setType(set.getString(7));
-				array.add(item);
+				jsonObject.put("uid",set.getString(2));
+				jsonObject.put("time",set.getString(3));
+				jsonObject.put("url",set.getString(4));
+				jsonObject.put("text",set.getString(5));
+				jsonObject.put("location",set.getString(6));
+				jsonObject.put("type",set.getString(7));
+				
+				jsonArray.add(jsonObject);
+				
+//				UploadItem item=new UploadItem();
+//				int ids=set.getInt(1);
+//				item.setUid(set.getString(2));
+//				item.setTime(set.getString(3));
+//				item.setUrl(set.getString(4));
+//				item.setText(set.getString(5));
+//				item.setLoaction(set.getString(6));
+//				item.setType(set.getString(7));
+//				arraylist.add(item);
 				
 //				JSONObject obj=new JSONObject();
 //				obj.put("uid", item.getUid());
@@ -52,6 +66,7 @@ public class DownloadDao {
 //				
 //				jsonArray.put(obj);
 			}
+			jsonStr=jsonArray.toString();
 				
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -60,13 +75,13 @@ public class DownloadDao {
 			
 		}
 		
-		if(array==null) {
+		if(jsonStr==null) {
 			System.out.println("没有相应的记录");
 		}else {
-			System.out.println("查询 "+array.size()+" 条记录");
-			 for(int i=0;i<array.size();i++) {
-				 UploadItem it=array.get(i);
-				 System.out.println(it.getText());
+			System.out.println("查询 "+jsonArray.size()+" 条记录 \n text:\n ");
+			 for(int i=0;i<jsonArray.size();i++) {
+				JSONObject obj2=jsonArray.getJSONObject(i);
+				 System.out.println(obj2.getString("text"));
 			
 			 }
 			 
@@ -82,11 +97,10 @@ public class DownloadDao {
 //				 System.out.println(tobj.get("url"));
 //				 System.out.println(tobj.get("text"));
 //			 }
-			 
-			 
-			 
+
 		}
-		return array;
+		System.out.println(jsonStr);
+		return jsonStr;
 	}
 	
 	public static void main(String[] args) {

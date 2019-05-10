@@ -72,7 +72,10 @@ public class UploadServlet extends HttpServlet {
     			e.printStackTrace();
 			}
     		Iterator<FileItem> iter=list==null?null:list.iterator();
+    		Uitem=new UploadItem();
+    		
     		while(iter!=null&&iter.hasNext()) {
+    			
     			FileItem item=(FileItem) iter.next();
     			if(item.isFormField()) {
 //    				System.out.println("表单");
@@ -94,7 +97,7 @@ public class UploadServlet extends HttpServlet {
 //    				if(item.getFieldName().equalsIgnoreCase("type")) {
 //    					System.out.println(new String(item.getString("utf-8")));
 //    				}
-    				
+//    				
     				
     				if(item.getFieldName().equalsIgnoreCase("uid")) {
     					Uitem.setUid(new String(item.getString("utf-8")));
@@ -104,15 +107,19 @@ public class UploadServlet extends HttpServlet {
     				}
     				if(item.getFieldName().equalsIgnoreCase("text")) {
     					Uitem.setText(new String(item.getString("utf-8")));
-    					System.out.println(Uitem.getText());
+//    					System.out.println(Uitem.getText());
     				}
     				if(item.getFieldName().equalsIgnoreCase("location")) {
     					Uitem.setLoaction(new String(item.getString("utf-8")));
-    					System.out.println(Uitem.getLoaction());
+//    					System.out.println(Uitem.getLoaction());
     				}
     				if(item.getFieldName().equalsIgnoreCase("type")) {
     					Uitem.setType(new String(item.getString("utf-8")));
-    					System.out.println(Uitem.getType());
+//    					System.out.println(Uitem.getType());
+    				}
+    				if(item.getFieldName().equalsIgnoreCase("Allurl")) {
+    					System.out.println(new String(item.getString("utf-8")));
+    					Uitem.setUrl(new String(item.getString("utf-8")));
     				}
     				
     				
@@ -138,7 +145,7 @@ public class UploadServlet extends HttpServlet {
     				}
     				
     				//url
-    				Uitem.setUrl("/"+Uitem.getUid()+"/"+filename);
+//    				Uitem.setUrl("/"+Uitem.getUid()+"/"+filename);
     				
     				BufferedOutputStream out=new BufferedOutputStream(new FileOutputStream(file));
     				
@@ -147,13 +154,23 @@ public class UploadServlet extends HttpServlet {
             		System.out.println("目标文件位置:" + path);
             		System.out.println("目标文件存入硬盘成功");
             		
-            		if(UploadDao.insert(Uitem)) {
-                      o.write("文件上传成功");
-            		}else {
-            			o.write("文件上传失败");
+            		if(Uitem.getUrl()!=null) {	
+            			if(UploadDao.insert(Uitem)) {
+                            o.write("文件上传成功");
+                  		}else {
+                  			o.write("文件上传失败");
+                  		}
             		}
-    			}
+            			
+            	}
+            		
+    			
     		}
+//    		if(UploadDao.insert(Uitem)) {
+//                o.write("文件上传成功");
+//      		}else {
+//      			o.write("文件上传失败");
+//      		}
     	}else {
             System.out.println("表单的Content-Type错误");
         } 
@@ -168,6 +185,19 @@ public class UploadServlet extends HttpServlet {
     
    
 }
+
+//for(int i=0;i<5;i++){
+//    if(i==1){
+//        OkHttpUtils.post()//
+//                .addFile("mFile", fileName+i, file).url(url).params(params)
+//                .build()//
+//                .execute(new MyStringCallback());
+//    }
+//    OkHttpUtils.post()//
+//            .addFile("mFile", fileName, file)
+//            .build()//
+//            .execute(new MyStringCallback());
+//}
 
 //Map map = new HashMap(); 
 //Iterator entries = map.entrySet().iterator(); 
