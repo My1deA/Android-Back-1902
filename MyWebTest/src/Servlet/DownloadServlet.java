@@ -34,8 +34,17 @@ public class DownloadServlet extends HttpServlet{
 		PrintWriter printWriter=resp.getWriter();
 		
 		String conditon=req.getParameter("download");
+		String countStr=req.getParameter("count");
+		int count=Integer.parseInt(countStr);
 		
-		jsonStr=DownloadDao.query();
+		
+		if(count>3) {
+			jsonStr=DownloadDao.query(count);
+		}else {
+			jsonStr=DownloadDao.query();
+		}
+		
+		
 		if(jsonStr==null) {
 			System.out.println("JsonStr 为空");
 		}else {
