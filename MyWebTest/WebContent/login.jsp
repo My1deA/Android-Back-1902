@@ -7,7 +7,7 @@
 <body>
 <form action="http://localhost:8080/MyWebTest/loginServlet" enctype="multipart/form-data" method="post">
     <input type="text" name="username">
-    <input type="password" name="pwd">
+    <input type="password" name="password">
     <input type="file" name="pic">
     <input type="submit">
 </form>
