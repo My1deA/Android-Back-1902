@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
+import Dao.StatsDao;
 import Dao.UploadDao;
 import Model.UploadItem;
 
@@ -156,6 +157,14 @@ public class UploadServlet extends HttpServlet {
             		
             		if(Uitem.getUrl()!=null) {	
             			if(UploadDao.insert(Uitem)) {
+            				
+            				if(Uitem.getType().equals("图片")) {
+            					StatsDao.updatePic();
+            				}else {
+            					StatsDao.updateVideo();
+            				}
+            				
+            				
                             o.write("文件上传成功");
                   		}else {
                   			o.write("文件上传失败");

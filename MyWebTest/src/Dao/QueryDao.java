@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.xdevapi.JsonArray;
 
+import Model.UserItem;
 import Util.JDBCUtil;
 
 public class QueryDao {
@@ -18,10 +19,10 @@ public class QueryDao {
 	private static JSONArray jsonArray=null;
 	private static String jsonStr=null;
 	
-	public static String query() {
+	public static String query(String name) {
 		try {
 			connection=JDBCUtil.getConnection();
-			String sql="select * from uploadinfo order by time desc limit "+count;
+			String sql="select * from uploadinfo where uid='"+name+"' order by time desc";
 			statement=connection.prepareStatement(sql);
 			set=statement.executeQuery(sql);
 			
@@ -41,7 +42,7 @@ public class QueryDao {
 				
 				jsonArray.add(jsonObject);
 				count++;
-				if(count>+2) {
+				if(count>=2) {
 					break;
 				}
 			}

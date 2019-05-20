@@ -18,7 +18,7 @@ public class StatsDao {
 	private static int videosum=0;
 	private static JSONObject jsonObject=null;
 	
-	public static String Query(UserItem item) {
+	public static String Query() {
 		try {
 			connection=JDBCUtil.getConnection();
 			String sql="select * from statsinfo";
