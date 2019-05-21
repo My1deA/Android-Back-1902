@@ -22,7 +22,7 @@ public class StatsServlet extends HttpServlet{
 		resp.setCharacterEncoding("utf-8");
 		PrintWriter printWriter=resp.getWriter();
 		
-		String name=req.getParameter("check");
+		String name=req.getParameter("stats");
 		String jsonStr=StatsDao.Query();
 		if(jsonStr==null) {
 			System.out.println("获取失败");

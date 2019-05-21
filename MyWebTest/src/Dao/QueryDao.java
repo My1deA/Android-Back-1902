@@ -27,6 +27,7 @@ public class QueryDao {
 			set=statement.executeQuery(sql);
 			
 			jsonArray=new JSONArray();
+			count=0;
 			
 			while(set.next()) {
 				

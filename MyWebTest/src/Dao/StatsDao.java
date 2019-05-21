@@ -90,6 +90,9 @@ public class StatsDao {
 		}
 	}
 	
-	
+//	public static void main(String[] args) {
+//		String jsonStr=StatsDao.Query();
+//		System.out.println(jsonStr);
+//	}
 	
 }
