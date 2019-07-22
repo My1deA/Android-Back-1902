@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="domain">
+	<class name="User" table="user">
+	
+		<!-- id 
+			name：实体中的属性 
+			column:数据库表的列名  (可选)
+			type: 列/属性的类型 每个类有3种类型 java/hibernate/mysql (可选)
+			length: 列的长度 (可选 默认为最长)-->
+		<id name="id" column="id">
+		<!--主键生成策略  (手动生成)
+			identity：主键自增
+			sequence:oracle中主键生成策略
+			native: identity or sequence 根据数据库类型选择 
+			uuid: 产生随机字符串作为主键 主键必须为String
+			assigned:手动去指定
+
+		-->
+			<generator class="assigned"></generator>
+		</id>
+		
+		
+		
+		
+		
+		
+		
+		<!--property:除了id外的属性
+			name：实体中的属性 
+			column:数据库表的列名  (可选)
+			type length 
+			not null：默认为false
+		
+		  -->
+		<property name="username" column="username"></property>
+		<property name="password" column="password"></property>
+		<property name="name" column="name"></property>
+		<property name="email" column="email"></property>
+		<property name="telephone" column="telephone"></property>
+		
+	</class>
+</hibernate-mapping>    

@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+
+@import url("head.css");
+
+.dvregContent {
+	margin: 40px 0px 0px 80px;
+}
+
+.dvform {
+	margin-top: 40px;
+}
+
+.dvregTitle {
+	color: #5E458A;
+}
+
+.section {
+	height: 70px;
+	line-height: 70px;
+}
+
+.section label {
+	float: left;
+	display: block;
+	width: 120px;
+	margin-right: 10px;
+	text-align: right;
+	line-height: 32px;
+	font-size: 14px;
+}
+
+.section input[type='text'] {
+	float: left;
+	width: 220px;
+	line-height: 28px;
+	line-height: 28px;
+	border: 1px solid #cdcdcd;
+	text-indent: 10px;
+}
+
+.section select {
+	float: left;
+	width: 120px;
+	height: 28px;
+	margin-right: 10px;
+}
+
+.btnreg {
+	width: 200px;
+	height: 35px;
+	line-height: 35px;
+	background-color: #5E458A;
+	color: white;
+	margin-left: 85px;
+	transition: all 1s;
+	border: none;
+	cursor: pointer;
+}
+
+.btnreg:hover {
+	background-color: #6FD8A1;
+}

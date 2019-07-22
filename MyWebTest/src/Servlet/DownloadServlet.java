@@ -19,7 +19,7 @@ import Model.UploadItem;
 
 @WebServlet("/downloadServlet")
 public class DownloadServlet extends HttpServlet{
-	
+	// netstat   -ano
 	private static  ArrayList<UploadItem> array=new ArrayList<UploadItem>();
 	private static String jsonStr=null;
 	private JSONObject jsonObject=null;
