@@ -53,3 +53,6 @@ private final static String Url="http://本机IP地址:8080/MyWebTest/queryServl
 4. 整合Baidu地图定位API
 5. 参与讨论 以及 整合 主页九宫格图片 图片查看/视频播放 模板
 
+#### 数据库样例
+<img src='https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xOTExMzA1NC0zNjZjNjNiZmM4MjYwNzgzLnBuZw?x-oss-process=image/format,png' width='100' />
+
